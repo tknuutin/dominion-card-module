@@ -1,0 +1,26 @@
+
+kortit pystysuunnassa, ei nimilappuja, neljä riviä per laatikko.
+kaksi hihnaa per rivi. U-kirjaimen muotoiset paksut erottimet jotka kiinnittyvät hihnoihin jotenkin. voi skaalata 10, 20 --> 100 kortinkin pinoille.
+
+62mm x 96mm    - suojattu kortti
+8mm - kymmenen kortin pakan paksuus suojilla, noin (vähän yläkanttiin)
+150mm - väliä korttipikkojen alun ja lopun välillä että voi lukea, vähän yläkanttiin, vähemmän jos vinossa?
+
+
+ylänäkymä
+
+   _   _   _   _
+  | | | | | | | |
+  | | | | | | | |
+  | | | | | | | |
+  | | | | | | | |
+  | | | | | | | |   <--- dividerit mihin vaan kohti tätä, ylä-ala-suunnassa
+  |_| |_| |_| |_|
+
+
+laatikon sisäpituus: 280mm ja neliö on
+yhden moduulin leveys: 6.9mm bro
+laipio: 3.5mm
+u-moduulin leveys: 15mm
+u-moduulin korkeys: 45mm
+penisvagina-moduulin leveys: 7mm
