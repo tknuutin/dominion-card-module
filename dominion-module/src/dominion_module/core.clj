@@ -5,17 +5,26 @@
             [unicode-math.core :refer :all])
   (:gen-class))
 
-                                        ; In mm
-(def card-deck-depth 6)
-(def card-deck-height 96)
-(def card-deck-width 62)
-
+; In mm
+;
+; Total module measurements
 (def module-length 15)
+(def module-length-e (+ module-length 1))
 (def module-width 69)
 (def module-height 45)
 
+; Measurements for the part that the cards sit on
+(def deck-depth 8)
+(def deck-height 96)
+(def deck-width 62)
+(def deck-intersect-depth (+ deck-depth 1))
+(def deck-side-height (/ module-height 2))
+(def to-deck-edge (/ (- module-length-e deck-intersect-depth) 2))
+
+; Measurements for the hole in the middle
 (def finger-hole-width 40)
 (def finger-hole-heigth 60)
+(def finger-hole-lower-w (* (/ finger-hole-width 3) 2))
 
 (defn -main
   "I am become tool, the optimizer of Dominion-boxes."
@@ -28,10 +37,24 @@
     (translate [0 0 (/ module-height 2)]
                (cube finger-hole-width module-width finger-hole-heigth)))
 
+  (def get-main-deck-cut
+    (translate [0 (/ (- module-length deck-depth) 2) (/ module-width 2)]
+               (cube deck-width, deck-intersect-depth, deck-height)))
+
+  (def get-side-cut
+    (let [side-intersect-height              (- module-height deck-side-height)
+          to-module-top    (- (/ module-height 2) (/ side-intersect-height 2))]
+      (translate [0 to-deck-edge to-module-top]
+                 (cube (+ module-width 1) deck-intersect-depth side-intersect-height))))
+
+  (def get-lower-fhole-cut
+    (translate [0 to-deck-edge 0]
+               (cube finger-hole-lower-w deck-intersect-depth module-height)))
 
   (def card-deck
-    (translate [0 (/ (- module-length card-deck-depth) 2) (/ module-width 2)]
-               (cube card-deck-width, card-deck-depth, card-deck-height)))
+    (union
+     (union get-main-deck-cut get-side-cut)
+     get-lower-fhole-cut))
 
   (def primitives
     (difference

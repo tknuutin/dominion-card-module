@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [scad-clj "0.5.2"]
                  [unicode-math "0.2.0"]]
+  :plugins [[lein-cljfmt "0.5.7"]]
   :main ^:skip-aot dominion-module.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
