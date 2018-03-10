@@ -31,7 +31,7 @@
 (def coupler-length (/ deck-depth 5))
 (def coupler-height deck-depth)
 (def coupler-diameter (/ deck-depth 3))
-(def coupler-difference 1.05)
+(def coupler-difference 1.07)
 
 ; Sometimes you just need some space
 (def epsilon 0.0001)
@@ -42,9 +42,8 @@
 
   (defn coupler
     [scalar-scale]
-    (let [coupler-length (* scalar-scale coupler-length)
-          coupler-diameter (* scalar-scale coupler-diameter)
-          coupler-height (* scalar-scale coupler-height)
+    (let [coupler-diameter (* scalar-scale coupler-diameter)
+          coupler-height (* (* scalar-scale 0.95) coupler-height)
           coupler-width (* scalar-scale coupler-width)]
         (rotate [0,0,(* 0.5 pi)]         ; 90 degrees
              (translate [(+ coupler-length (/ coupler-diameter 2))  0 (- (-(/ module-height 2) (/ coupler-height 2)))]
@@ -62,7 +61,7 @@
      (union
       (cube  module-width module-length module-height)
       (front-couplers 1))
-     (translate [0 (- (- module-length (/ (- module-length (* module-length coupler-difference) 2))) ) (- epsilon)] (front-couplers coupler-difference))))
+     (translate [0  (- module-length ) (- epsilon) ] (front-couplers coupler-difference))))
 
   (def finger-hole
     (translate [0 0 (/ module-height 2)]
