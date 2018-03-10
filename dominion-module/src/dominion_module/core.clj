@@ -32,28 +32,36 @@
 (def coupler-height deck-depth)
 (def coupler-diameter (/ deck-depth 3))
 
+; Sometimes you just need some space
+(def epsilon 0.0001)
 
 (defn -main
   "I am become tool, the optimizer of Dominion-boxes."
   [& args]
 
-  (def coupler [scale]
-    (rotate [0,0,(* 0.5 pi)] ; 90 degrees
-            (translate [(+ coupler-length (/ coupler-diameter 2))  0 (- (-(/ module-height 2) (/ coupler-height 2)))]
-                       (union
-                        (translate [(* coupler-length 2) 0 0] (cylinder coupler-diameter coupler-height))
-                        (cube coupler-width coupler-length coupler-height)))))
-  (def front-couplers
+  (defn coupler
+    [scalar-scale]
+    (let [coupler-length (* scalar-scale coupler-length)
+          coupler-diameter (* scalar-scale coupler-diameter)
+          coupler-height (* scalar-scale coupler-height)
+          coupler-width (* scalar-scale coupler-width)]
+        (rotate [0,0,(* 0.5 pi)]         ; 90 degrees
+             (translate [(+ coupler-length (/ coupler-diameter 2))  0 (- (-(/ module-height 2) (/ coupler-height 2)))]
+                        (union
+                         (translate [(* coupler-length 2) 0 0] (cylinder coupler-diameter coupler-height))
+                         (cube coupler-width coupler-length coupler-height))))))
+  (defn front-couplers
+    [scalar-scale]
     (union
-     (translate [(- (/ module-width 2) (* coupler-diameter 2)) (/ module-length 2) 0] coupler)
-     (translate [(- (- (/ module-width 2) (* coupler-diameter 2))) (/ module-length 2) 0] coupler)))
+     (translate [(- (/ module-width 2) (* coupler-diameter 2)) (/ module-length 2) 0] (coupler scalar-scale))
+     (translate [(- (- (/ module-width 2) (* coupler-diameter 2))) (/ module-length 2) 0] (coupler scalar-scale))))
 
   (def base
     (difference
      (union
       (cube  module-width module-length module-height)
-      front-couplers)
-     (translate [0 (- module-length) 0] front-couplers)))
+      (front-couplers 1))
+     (translate [0 (- module-length) (- epsilon)] (front-couplers 1.05))))
 
   (def finger-hole
     (translate [0 0 (/ module-height 2)]
