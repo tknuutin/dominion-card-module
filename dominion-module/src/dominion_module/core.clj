@@ -26,12 +26,34 @@
 (def finger-hole-heigth 60)
 (def finger-hole-lower-w (* (/ finger-hole-width 3) 2))
 
+; Calculations for the couplers
+(def coupler-width (/ deck-width 10))
+(def coupler-length (/ deck-depth 5))
+(def coupler-height deck-depth)
+(def coupler-diameter (/ deck-depth 3))
+
+
 (defn -main
   "I am become tool, the optimizer of Dominion-boxes."
   [& args]
 
+  (def coupler [scale]
+    (rotate [0,0,(* 0.5 pi)] ; 90 degrees
+            (translate [(+ coupler-length (/ coupler-diameter 2))  0 (- (-(/ module-height 2) (/ coupler-height 2)))]
+                       (union
+                        (translate [(* coupler-length 2) 0 0] (cylinder coupler-diameter coupler-height))
+                        (cube coupler-width coupler-length coupler-height)))))
+  (def front-couplers
+    (union
+     (translate [(- (/ module-width 2) (* coupler-diameter 2)) (/ module-length 2) 0] coupler)
+     (translate [(- (- (/ module-width 2) (* coupler-diameter 2))) (/ module-length 2) 0] coupler)))
+
   (def base
-    (cube  module-width module-length module-height))
+    (difference
+     (union
+      (cube  module-width module-length module-height)
+      front-couplers)
+     (translate [0 (- module-length) 0] front-couplers)))
 
   (def finger-hole
     (translate [0 0 (/ module-height 2)]
