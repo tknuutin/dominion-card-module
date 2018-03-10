@@ -31,6 +31,7 @@
 (def coupler-length (/ deck-depth 5))
 (def coupler-height deck-depth)
 (def coupler-diameter (/ deck-depth 3))
+(def coupler-difference 1.05)
 
 ; Sometimes you just need some space
 (def epsilon 0.0001)
@@ -61,7 +62,7 @@
      (union
       (cube  module-width module-length module-height)
       (front-couplers 1))
-     (translate [0 (- module-length) (- epsilon)] (front-couplers 1.05))))
+     (translate [0 (- (- module-length (/ (- module-length (* module-length coupler-difference) 2))) ) (- epsilon)] (front-couplers coupler-difference))))
 
   (def finger-hole
     (translate [0 0 (/ module-height 2)]

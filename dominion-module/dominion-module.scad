@@ -30,7 +30,7 @@ difference () {
           }
         }
       }
-      translate ([0, -15, -1.0E-4]) {
+      translate ([0, -15.363636363636363, -1.0E-4]) {
         union () {
           translate ([175/6, 15/2, 0]) {
             rotate ([0.0,0.0,90.0]) {
