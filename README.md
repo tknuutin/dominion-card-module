@@ -1,5 +1,5 @@
 # dominion-card-module
-Dominion card holder 3d print project.
+3d printable card holder modules for the card game Dominion.
 
 Here is a picture of the current prototype:
 ![image of prototype](images/dominion.jpg?raw=true)
